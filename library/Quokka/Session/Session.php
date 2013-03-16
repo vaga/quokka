@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quokka Framework 
+ * Quokka Framework
  *
  * @copyright Copyright 2012 Fabien Casters
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License

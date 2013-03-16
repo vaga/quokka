@@ -19,7 +19,7 @@ use Quokka\Mvc\View\View;
  * @author Fabien Casters
  */
 abstract class AbstractController {
-    
+
     private $_application = null;
 
     /**

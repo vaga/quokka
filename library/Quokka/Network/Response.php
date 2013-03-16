@@ -21,39 +21,71 @@ class Response {
     /**
      * @var int
      */
-    private $_statusCode = 200;
+    private $_status = 200;
 
     /**
      * @var string
      */
     private $_body = '';
 
+    /**
+     * @var array
+     */
+    private $_headers = [];
 
     /**
      *
      * @param $statusCode int
      * @return void
      */
-    public function setStatusCode( $statusCode ) {
+    public function setStatus( $status ) {
 
-        $this->_statusCode = $statusCode;
+        $this->_status = $status;
     }
 
-    /** 
+    /**
      *
      * @return int
      */
-    public function getStatusCode() {
+    public function getStatus() {
 
         return $this->_statusCode;
     }
 
+    /**
+     *
+     * @param $key string
+     * @param $value string
+     */
+    public function setHeader($key, $value) {
+
+        $this->_headers[$key] = $value;
+    }
+
+    /**
+     *
+     * @param $content string
+     * @return void
+     */
     public function appendBody( $content ) {
 
         $this->_body .= $content;
     }
 
+    public function sendHeaders() {
+
+        foreach($this->_headers as $key => $value) {
+
+            header($key . ' ' . $value, true);
+        }
+    }
+    /**
+     *
+     * @return void
+     */
     public function send() {
+
+        $this->sendHeaders();
 
         echo $this->_body;
     }

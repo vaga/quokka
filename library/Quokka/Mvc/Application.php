@@ -73,7 +73,6 @@ class Application {
 
         if( !$this->getRouter()->route( $this->getRequest() ) ) {
 
-            $this->getRequest()->setParam('module', 'default');
             $this->getRequest()->setParam('controller', 'error');
             $this->getRequest()->setParam('action', 'index');
         }
@@ -104,18 +103,18 @@ class Application {
         $request->setDispatched(true);
 
         if($request->getParam('module', null) === null )
-            $class = 'Application\\Controller\\' . 
+            $class = 'Application\\Controller\\' .
                      ucfirst($request->getParam('controller')) . 'Controller';
         else
-            $class = 'Application\\Module\\' . 
+            $class = 'Application\\Module\\' .
                      ucfirst($request->getParam('module')) . '\\' .
                      ucfirst($request->getParam('controller')) . 'Controller';
-        
+
         $method = $request->getParam('action') . 'Action';
 
         $controller = new $class();
         $controller->setApplication($this);
-        
+
         return $controller->$method();
     }
 
@@ -164,5 +163,24 @@ class Application {
 
         $this->_layout = $layout;
     }
-    
+
+    /**
+     *
+     * @param $key string
+     * @param $value mixed
+     */
+    public function addResource($key, $value) {
+
+        $this->_resources[$key] = $value;
+    }
+
+    /**
+     *
+     * @param $key string
+     * @return mixed
+     */
+    public function getResource($key) {
+
+        return $this->_resources[$key];
+    }
 }

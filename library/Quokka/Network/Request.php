@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quokka Framework 
+ * Quokka Framework
  *
  * @copyright Copyright 2012 Fabien Casters
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
@@ -73,7 +73,7 @@ class Request {
 
         return $_POST[$key];
     }
-    
+
     /**
      *
      * @param $key string|null
@@ -87,7 +87,7 @@ class Request {
         return $_GET[$key];
     }
 
-    /** 
+    /**
      *
      * @return string
      */
@@ -104,17 +104,30 @@ class Request {
 
         return ($this->getMethod() == 'POST');
     }
-    
+
+    /**
+     *
+     * @param $dispatched boolean
+     * @return void
+     */
     public function setDispatched( $dispatched ) {
 
         $this->_dispatched = $dispatched;
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public function isDispatched() {
 
         return $this->_dispatched;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getUri() {
 
         return $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

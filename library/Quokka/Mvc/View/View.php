@@ -17,7 +17,7 @@ namespace Quokka\Mvc\View;
  * @author Fabien Casters
  */
 class View {
-    
+
     /**
      * @var array
      */
@@ -28,6 +28,15 @@ class View {
      */
     private $_file = '';
 
+    /**
+     *
+     * @param $file string
+     * @return void
+     */
+    public function __construct($file = '') {
+        
+        $this->_file = $file;
+    }
     /**
      *
      * @param $key string
@@ -54,16 +63,16 @@ class View {
      * @return string
      */
     public function render() {
-    
+
         extract( $this->_data );
 
         ob_start();
-        
+
         require $this->_file;
-        
+
         $content = ob_get_contents();
         ob_end_clean();
-        
+
         return $content;
     }
 }
