@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
  */
 
-namespace Quokka\Form
+namespace Quokka\Form;
 
 /**
  * \Quokka\Form\Form
@@ -31,14 +31,14 @@ class Form {
     /**
      * @var boolean
      */
-    private $_valid;
+    private $_valid = true;
 
     /**
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
+
         $this->init();
     }
 
@@ -47,8 +47,8 @@ class Form {
      * @param $element Quokka\Form\Element\AbstractElement
      * @return void
      */
-    public function addElement($element)
-    {
+    public function addElement($element) {
+
         $this->_elements[$element->getName()] = $element;
     }
 
@@ -57,12 +57,12 @@ class Form {
      * @param $data array
      * @return void
      */
-    public function bind($data)
-    {
-        foreach ($data as $key => $value)
-        {
+    public function bind($data) {
+
+        foreach ($data as $key => $value) {
+
             $value = (isset($value)) ? $value : '';
-            $this->_elements[$name]->setValue($value);
+            $this->_elements[$key]->setValue($value);
         }
     }
 
@@ -72,8 +72,8 @@ class Form {
      * @param $msg string
      * @return void
      */
-    public function addError($name, $msg)
-    {
+    public function addError($name, $msg) {
+
         $this->_errors[$name] = $msg;
         $this->_valid = false;
     }
@@ -83,15 +83,20 @@ class Form {
      * @param $data array
      * @return boolean
      */
-    public function isValid($data)
-    {
+    public function isValid($data) {
+
         $this->bind($data);
-        foreach ($this->_elements as $elem)
-        {
+        foreach ($this->_elements as $element) {
+
             if (!$element->isValid())
-                $this->addError($elem->getName(), $elem->getErrorMessage());
+                $this->addError($element->getName(), $element->getErrorMessage());
         }
         return $this->_valid;
+    }
+
+    public function getElement($key) {
+
+        return $this->_elements[$key];
     }
 
     /**

@@ -7,16 +7,16 @@
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
  */
 
-namespace Quokka\Form
+namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\AbstractElement
+ * \Quokka\Form\ElementAbstractElement
  *
  * @package Quokka
  * @subpackage Form
  * @author Fabien Casters
  */
-class AbstractElement {
+abstract class AbstractElement {
 
     /**
      * @var string
@@ -32,6 +32,21 @@ class AbstractElement {
      * @var boolean
      */
     protected $_required = false;
+
+    /**
+     * @var mixed
+     */
+    protected $_value = '';
+
+    /**
+     * @var array
+     */
+    protected $_filters = [];
+
+    /**
+     * @var array
+     */
+    protected $_validates = [];
 
     /**
      *
@@ -73,7 +88,7 @@ class AbstractElement {
 
     /**
      *
-     * @param boolean
+     * @param $required boolean
      * @return void
      */
     public function setRequired($required)
@@ -81,8 +96,87 @@ class AbstractElement {
         $this->_required = $required;
     }
 
-    public function isValid()
-    {
+    /**
+     *
+     * @return boolean
+     */
+    public function isRequired() {
 
+        return $this->_required;
     }
+
+    /**
+     *
+     * @param $value mixed
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function getValue() {
+
+        $value = $this->_value;
+        foreach($this->_filters as $filter) {
+            
+            $value = $filter->filter($value);
+        }
+        return $value;
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function getUnfilteredValue() {
+
+        return $this->_value;
+    }
+
+    /**
+     *
+     * @param $validate \Quokka\Validate\AbstractValidate
+     * @return void
+     */
+    public function addValidate($validate) {
+
+        $this->_validates[] = $validate;
+    }
+
+    /**
+     *
+     * @param $validate \Quokka\Validate\AbstractFilter
+     * @return void
+     */
+    public function addFilter($filter) {
+
+        $this->filters[] = $filter;
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    public function isValid() {
+
+        if ($this->isRequired() && $this->getUnfilteredValue() == '')
+            return false;
+
+        foreach ($this->_validates as $validate) {
+        
+            if (!$validate->isValid($this->getUnfilteredValue()))
+                return false;
+        }
+        return true; 
+    }
+
+    /**
+     *
+     * @return void
+     */
+    abstract public function render();
 }
