@@ -2,6 +2,8 @@
 
 namespace Application\Controller;
 
+use \Quokka\Form\Element as Toto;
+
 class IndexController extends \Quokka\Mvc\Controller\AbstractController
 {
     public function indexAction()
@@ -10,8 +12,11 @@ class IndexController extends \Quokka\Mvc\Controller\AbstractController
         $select = $db->prepare("SELECT * FROM t_news");
         $select->execute();
 
+        $account = new \Quokka\Session\Container('account');
+
         return $this->render([
-            'news' => $select->fetchAll()
+            'news' => $select->fetchAll(),
+            'name' => $account->get('username', 'Unknown')
         ]);
     }
 
@@ -33,14 +38,16 @@ class IndexController extends \Quokka\Mvc\Controller\AbstractController
     public function formAction() {
 
         $form = new \Quokka\Form\Form();
-        $form->addElement(new \Quokka\Form\Element\Text('name'));
-        $form->addElement(new \Quokka\Form\Element\Text('username'));
-        $form->addElement(new \Quokka\Form\Element\Text('toto'));
+        $form->addElement(new Toto\Text('name'));
+        $form->addElement(new Toto\Text('username'));
+        $form->addElement(new Toto\Text('toto'));
+        $account = new \Quokka\Session\Container('account');
         if ($this->getApplication()->getRequest()->isPost()) {
 
             if ($form->isValid($this->getApplication()->getRequest()->getPost())) {
 
-                echo 'is valid<br />';
+                $account->set('username', $form->getElement('name')->getValue());
+                echo $form->getElement('name')->getValue() . ' is valid<br />';
             }
             echo 'is post !<br />';
         }
