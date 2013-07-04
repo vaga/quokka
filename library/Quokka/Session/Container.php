@@ -19,24 +19,42 @@ namespace Quokka\Session;
 class Container {
 
 
+    /**
+     * @var string
+     */
     private $_name;
 
+    /**
+     *
+     * @param $name string
+     * @return void
+     */
     public function __construct($name) {
 
         Session::start();
         $this->_name = $name;
     }
 
+    /**
+     *
+     * @param $key string
+     * @param $value mixed
+     * @return void
+     */
     public function set($key, $value) {
 
         $_SESSION[$this->_name][$key]  = $value;
     }
 
+    /**
+     * @param $key string
+     * @param $default mixed
+     * @return mixed
+     */
     public function get($key, $default = null) {
 
         if (isset($_SESSION[$this->_name][$key]))
             return $_SESSION[$this->_name][$key];
         return $default;
     }
-
 }

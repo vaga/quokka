@@ -17,11 +17,18 @@ namespace Quokka\Filter;
  */
 abstract class AbstractFilter {
 
+    /**
+     *
+     * @return void
+     */
     public function __construct() {
-
-
     }
 
+    /**
+     *
+     * @param $data mixed
+     * @return void
+     */
     public function filter($data = null);
 }
 

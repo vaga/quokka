@@ -53,5 +53,10 @@ abstract class AbstractValidate {
         return $this->_arguments[$key];
     }
 
+    /**
+     *
+     * @param $data mixed
+     * @param $context mixed
+     */
     abstract public function isValid($data = null, $context = null);
 }

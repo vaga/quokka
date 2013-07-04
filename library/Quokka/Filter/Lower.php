@@ -18,6 +18,11 @@ namespace Quokka\Filter;
  */
 class Lower {
 
+    /**
+     *
+     * @param $data string
+     * @return string
+     */
     public function filter($data = null) {
 
         return strtolower($data);
