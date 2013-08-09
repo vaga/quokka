@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quokka Framework 
+ * Quokka Framework
  *
  * @copyright Copyright 2012 Fabien Casters
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
@@ -77,6 +77,7 @@ class Application {
             $this->getRequest()->setParam('action', 'index');
         }
 
+        $this->_preDispatch();
         do {
 
             $content = $this->_dispatch();
@@ -88,6 +89,7 @@ class Application {
             $this->_layout->set('content', $content);
             $content = $this->_layout->render();
         }
+        $this->_postDispatch();
 
         $this->getResponse()->appendBody($content);
         $this->getResponse()->send();
@@ -95,9 +97,29 @@ class Application {
 
     /**
      *
+     * @return void
+     */
+    private function _preDispatch() {
+
+        foreach($this->_plugins as $plugin)
+            $plugin->preDispatch();
+    }
+
+    /**
+     *
+     * @return void
+     */
+    private function _postDispatch() {
+
+        foreach($this->_plugins as $plugin)
+            $plugin->preDispatch();
+    }
+
+    /**
+     *
      * @return string
      */
-    public function _dispatch() {
+    private function _dispatch() {
 
         $request = $this->getRequest();
         $request->setDispatched(true);
@@ -162,6 +184,17 @@ class Application {
     public function setLayout( $layout ) {
 
         $this->_layout = $layout;
+    }
+
+    /**
+     *
+     * @param $plugin \Quokka\Mvc\AbstractPlugin
+     * @return void
+     */
+    public function addPlugin($plugin) {
+
+        $plugin->setApplication($this);
+        $this->_plugins[] = $plugin;
     }
 
     /**
