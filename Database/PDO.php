@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * Quokka Framework
+ *
+ * @copyright Copyright 2012 Fabien Casters
+ * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
+ */
+
+namespace Quokka\Database;
+
+/**
+ * \Quokka\Database\Database
+ *
+ * @package Quokka
+ * @subpackage Database
+ * @author Fabien Casters
+ */
+class PDO extends \PDO {
+
+    /**
+     * @var string
+     */
+    private $_mapperNamespace = "";
+
+    /**
+     *
+     * @param $modelNamespace string
+     * @return void
+     */
+    public function setMapperNamespace($modelNamespace) {
+
+        $this->_mapperNamespace = $modelNamespace;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getMapperNamespace() {
+
+        return $this->_mapperNamespace;
+    }
+
+    /**
+     *
+     * @param $mapper string
+     * @return \Quokka\Database\AbstractMapper
+     */
+    public function getMapper($mapper) {
+
+        $className = $this->_mapperNamespace . '\\' . ucfirst($mapper) . 'Mapper';
+        $mapper = new $className();
+        $mapper->setPDO($this);
+        return $mapper;
+    }
+}
