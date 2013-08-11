@@ -57,4 +57,13 @@ class Container {
             return $_SESSION[$this->_name][$key];
         return $default;
     }
+
+    /**
+     *
+     * @return void
+     */
+     public function clear() {
+
+        unset($_SESSION[$this->_name]);
+     }
 }
