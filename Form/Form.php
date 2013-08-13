@@ -35,16 +35,7 @@ class Form {
 
     /**
      *
-     * @return void
-     */
-    public function __construct() {
-
-        $this->init();
-    }
-
-    /**
-     *
-     * @param $element Quokka\Form\Element\AbstractElement
+     * @param $element \Quokka\Form\Element\AbstractElement
      * @return void
      */
     public function addElement($element) {
@@ -80,6 +71,24 @@ class Form {
 
     /**
      *
+     * @return boolean
+     */
+    public function hasError() {
+
+        return !empty($this->_errors);
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getErrors() {
+
+        return $this->_errors;
+    }
+
+    /**
+     *
      * @param $data array
      * @return boolean
      */
@@ -94,14 +103,13 @@ class Form {
         return $this->_valid;
     }
 
+    /**
+     *
+     * @param $key string
+     * @return \Quokka\Form\Element\AbstractElement
+     */
     public function getElement($key) {
 
         return $this->_elements[$key];
     }
-
-    /**
-     *
-     * @return void
-     */
-    public function init() { }
 }
