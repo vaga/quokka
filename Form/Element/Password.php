@@ -10,7 +10,7 @@
 namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\Password
+ * \Quokka\Form\Element\Password
  *
  * @package Quokka
  * @subpackage Form
@@ -24,10 +24,7 @@ class Password extends AbstractElement {
      */
     public function render() {
 
-        $content = '<input type="password" name="' . $this->getName() . '"';
-        if ($this->getUnfilteredValue() != '')
-            $content .= ' value="' . htmlspecialchars($this->getUnfilteredValue()) . '"';
-        $content .= ' />';
+        $content = '<input type="password" name="' . $this->getName() . '" />';
 
         return $content;
     }

@@ -10,13 +10,24 @@
 namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\Element\Hidden
+ * \Quokka\Form\Element\Number
  *
  * @package Quokka
  * @subpackage Form
  * @author Fabien Casters
  */
-class Hidden extends AbstractElement {
+class Number extends AbstractElement {
+
+    /**
+     *
+     * @param $name string
+     * @return string
+     */
+    public function __construct($name) {
+
+        $this->addValidate(new \Quokka\Validate\Numeric());
+        parent::__construct($name);
+    }
 
     /**
      *
@@ -24,7 +35,7 @@ class Hidden extends AbstractElement {
      */
     public function render() {
 
-        $content = '<input type="hidden" name="' . $this->getName() . '"';
+        $content = '<input type="number" name="' . $this->getName() . '"';
         if ($this->getUnfilteredValue() != '')
             $content .= ' value="' . htmlspecialchars($this->getUnfilteredValue()) . '"';
         $content .= ' />';

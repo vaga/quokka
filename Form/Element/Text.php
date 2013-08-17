@@ -10,7 +10,7 @@
 namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\Text
+ * \Quokka\Form\Element\Text
  *
  * @package Quokka
  * @subpackage Form

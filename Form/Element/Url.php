@@ -10,13 +10,26 @@
 namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\Element\Hidden
+ * \Quokka\Form\Element\Url
  *
  * @package Quokka
  * @subpackage Form
  * @author Fabien Casters
  */
-class Hidden extends AbstractElement {
+class Url extends AbstractElement {
+
+    /**
+     *
+     * @param $name string
+     * @return string
+     */
+    public function __construct($name = 'email') {
+
+        $this->addFilter(new \Quokka\Filter\Lower());
+        $this->addValidate(new \Quokka\Validate\Url());
+
+        parent::__construct($name);
+    }
 
     /**
      *
@@ -24,7 +37,7 @@ class Hidden extends AbstractElement {
      */
     public function render() {
 
-        $content = '<input type="hidden" name="' . $this->getName() . '"';
+        $content = '<input type="url" name="' . $this->getName() . '"';
         if ($this->getUnfilteredValue() != '')
             $content .= ' value="' . htmlspecialchars($this->getUnfilteredValue()) . '"';
         $content .= ' />';

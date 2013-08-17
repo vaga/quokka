@@ -10,7 +10,7 @@
 namespace Quokka\Form\Element;
 
 /**
- * \Quokka\Form\ElementAbstractElement
+ * \Quokka\Form\Element\AbstractElement
  *
  * @package Quokka
  * @subpackage Form
@@ -122,7 +122,7 @@ abstract class AbstractElement {
 
         $value = $this->_value;
         foreach($this->_filters as $filter) {
-            
+
             $value = $filter->filter($value);
         }
         return $value;
@@ -154,7 +154,7 @@ abstract class AbstractElement {
      */
     public function addFilter($filter) {
 
-        $this->filters[] = $filter;
+        $this->_filters[] = $filter;
     }
 
     /**
@@ -167,11 +167,11 @@ abstract class AbstractElement {
             return false;
 
         foreach ($this->_validates as $validate) {
-        
+
             if (!$validate->isValid($this->getUnfilteredValue()))
                 return false;
         }
-        return true; 
+        return true;
     }
 
     /**

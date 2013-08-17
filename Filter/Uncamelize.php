@@ -16,7 +16,7 @@ namespace Quokka\Filter;
  * @subpackage Filter
  * @author Fabien Casters
  */
-class Uncamelize {
+class Uncamelize extends AbstractFilter {
 
     /**
      *
