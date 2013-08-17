@@ -49,7 +49,7 @@ class Response {
      */
     public function getStatus() {
 
-        return $this->_statusCode;
+        return $this->_status;
     }
 
     /**
@@ -64,6 +64,17 @@ class Response {
 
     /**
      *
+     * @param $url string
+     * @return void
+     */
+    public function redirect($url, $status = 302) {
+
+        $this->setStatus($status);
+        $this->setHeader('Location', $url);
+    }
+
+    /**
+     *
      * @param $content string
      * @return void
      */
@@ -74,9 +85,11 @@ class Response {
 
     public function sendHeaders() {
 
+        http_response_code($this->getStatus());
+
         foreach($this->_headers as $key => $value) {
 
-            header($key . ' ' . $value, true);
+            header($key . ': ' . $value, true);
         }
     }
     /**
