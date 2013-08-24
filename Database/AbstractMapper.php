@@ -75,6 +75,8 @@ abstract class AbstractMapper {
         $prepare->execute($params);
 
         $result = $prepare->fetch(PDO::FETCH_ASSOC);
+        if ($result == false)
+            return false;
 
         return $this->createEntity($result);
     }
