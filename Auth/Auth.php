@@ -10,12 +10,18 @@
 namespace Quokka\Auth;
 
 /**
- * \Quokka\Auth\AbstractAuth
+ * \Quokka\Auth\Auth
  *
  * @package Quokka
  * @author Fabien Casters
  */
-abstract class AbstractAuth {
+class Auth {
+
+
+    /**
+     * @var \Quokka\Auth\InterfaceAuthenticator
+     */
+    private $_authenticator;
 
     /**
      * @var \Quokka\Session\Container
@@ -24,10 +30,12 @@ abstract class AbstractAuth {
 
     /**
      *
+     * @param $pdo \Quokka\Auth\InterfaceAuthenticator
      * @return void
      */
-    public function __construct() {
+    public function __construct($authenticator) {
 
+        $this->_authenticator = $authenticator;
         $this->_session = new \Quokka\Session\Container('identity');
     }
 
@@ -74,5 +82,14 @@ abstract class AbstractAuth {
      * @param $credential string
      * @return boolean
      */
-    abstract public function authenticate($identity, $credential);
+    public function authenticate($identity, $credential) {
+
+        $identity = $this->_authenticator->authenticate($identity, $credential);
+        if ($identity != false) {
+
+            $this->setIdentity($identity);
+            return true;
+        }
+        return false;
+    }
 }
