@@ -136,6 +136,7 @@ class Application {
 
         $controller = new $class();
         $controller->setApplication($this);
+        $controller->init();
 
         return $controller->$method();
     }

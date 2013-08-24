@@ -34,6 +34,12 @@ abstract class AbstractController {
 
     /**
      *
+     * @return void
+     */
+    public function init() { }
+
+    /**
+     *
      * @return \Quokka\Mvc\Application
      */
     public function getApplication() {
