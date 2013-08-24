@@ -19,16 +19,6 @@ namespace Quokka\Database;
 abstract class AbstractMapper {
 
     /**
-     * @var \Quokka\Database\AbstractTable
-     */
-    private $_table;
-
-    /**
-     * @var string
-     */
-    private $_modelName;
-
-    /**
      * @var \Quokka\Database\PDO
      */
     private $_pdo;
@@ -52,49 +42,74 @@ abstract class AbstractMapper {
         return $this->_pdo;
     }
 
+
     /**
      *
-     * @param $modelName string
+     * @param $sql string
+     * @param $params array
+     * @return array
+     */
+    public function fetchAll($sql, $params = []) {
+
+        $prepare = $this->getPDO()->prepare($sql);
+        $prepare->execute($params);
+
+        $results = $prepare->fetchAll();
+        $return = [];
+        foreach($results as $result) {
+
+            $return[] = $this->createEntity($result);
+        }
+        return $return;
+    }
+
+    /**
+     *
+     * @param $sql string
+     * @param $params array
+     * @return \Quokka\Database\AbstractEntity
+     */
+    public function fetchOne($sql, $params = []) {
+
+        $prepare = $this->getPDO()->prepare($sql);
+        $prepare->execute($params);
+
+        $result = $this->fetch();
+
+        return $this->createEntity($result);
+    }
+
+    /**
+     *
+     * @param $sql string
+     * @param $data array
      * @return void
      */
-    public function setModelName($modelName) {
+    public function execute($sql, $data) {
 
-        $this->_modelName = $modelName;
+        $prepare = $this->getPDO()->prepare($sql);
+        $prepare->execute($data);
     }
 
     /**
      *
-     * @return string
+     * @param $obj \Quokka\Database\AbstractEntity
      */
-    public function getModelName() {
+    public function save($obj) {
 
-        return $this->_modelName;
+        $this->saveEntity($obj);
     }
 
     /**
      *
-     * @param $pdo \Quokka\Database\AbstractTable
-     * @return void
+     * @param $data array
      */
-    public function setTable($table) {
-
-        $this->_table = $table;
-    }
+    abstract public function createEntity($data);
 
     /**
      *
-     * @return \Quokka\Database\AbstractTable
+     * @param $data array
+     * @param $obj \Quokka\Database\AbstractEntity
      */
-    public function getTable() {
-
-        return $this->_table;
-    }
-
-    public function findAll() {
-
-        $sql = 'SELECT * FROM ' . $this->_table->getName() . ';';
-        $prepare = $this->_pdo->prepare($sql);
-        $prepare->execute();
-        return $prepare->fetchAll(PDO::FETCH_CLASS, $this->getModelName());
-    }
+    abstract public function saveEntity($obj);
 }
