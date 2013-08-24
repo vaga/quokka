@@ -54,7 +54,7 @@ abstract class AbstractMapper {
         $prepare = $this->getPDO()->prepare($sql);
         $prepare->execute($params);
 
-        $results = $prepare->fetchAll();
+        $results = $prepare->fetchAll(PDO::FETCH_ASSOC);
         $return = [];
         foreach($results as $result) {
 
@@ -74,7 +74,7 @@ abstract class AbstractMapper {
         $prepare = $this->getPDO()->prepare($sql);
         $prepare->execute($params);
 
-        $result = $this->fetch();
+        $result = $prepare->fetch(PDO::FETCH_ASSOC);
 
         return $this->createEntity($result);
     }

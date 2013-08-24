@@ -112,7 +112,7 @@ class Application {
     private function _postDispatch() {
 
         foreach($this->_plugins as $plugin)
-            $plugin->preDispatch();
+            $plugin->postDispatch();
     }
 
     /**
