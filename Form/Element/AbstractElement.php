@@ -74,7 +74,7 @@ abstract class AbstractElement {
      */
     public function getErrorMessage()
     {
-        return $this->_errorMessage();
+        return $this->_errorMessage;
     }
 
     /**
