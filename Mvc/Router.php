@@ -50,9 +50,11 @@ class Router {
      */
     public function route( $request ) {
 
+        $uri = preg_replace('/\?.*/', '', $request->getUri());
+
         foreach( $this->_rules as $rule ) {
 
-            if( preg_match( '`' . $rule['regexp'] . '`', $request->getUri(), $matches) ) {
+            if( preg_match( '`' . $rule['regexp'] . '`', $uri, $matches) ) {
 
                 $params = $matches + $rule['params'];
                 foreach( $params as $key => $value ) {

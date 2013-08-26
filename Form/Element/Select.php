@@ -41,7 +41,7 @@ class Select extends AbstractElement {
      */
     public function isValid() {
 
-        if (!arrau_key_exists($this->getUnfilteredValue, $this->_options))
+        if (!array_key_exists($this->getUnfilteredValue(), $this->_options))
             return false;
 
         return parent::isValid();
