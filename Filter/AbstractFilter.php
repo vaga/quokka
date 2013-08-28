@@ -29,6 +29,6 @@ abstract class AbstractFilter {
      * @param $data mixed
      * @return void
      */
-    public function filter($data = null);
+    abstract public function filter($data = null);
 }
 
