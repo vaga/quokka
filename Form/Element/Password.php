@@ -24,7 +24,10 @@ class Password extends AbstractElement {
      */
     public function render() {
 
-        $content = '<input type="password" name="' . $this->getName() . '" />';
+        $content = '<input type="password" name="' . $this->getName() . '"';
+        foreach ($this->getAttributes() as $key => $value)
+            $content .= ' ' . $key . '="' . $value . '"';
+        $content .= ' />';
 
         return $content;
     }

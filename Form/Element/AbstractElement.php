@@ -49,6 +49,11 @@ abstract class AbstractElement {
     protected $_validates = [];
 
     /**
+     * @var array
+     */
+    protected $_attributes = [];
+
+    /**
      *
      * @param $name string
      * @return void
@@ -172,6 +177,26 @@ abstract class AbstractElement {
                 return false;
         }
         return true;
+    }
+
+    /**
+     *
+     * @param $key string
+     * @param $value string
+     * @return void
+     */
+    public function addAttribute($key, $value) {
+
+        $this->_attributes[$key] = $value;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getAttributes() {
+
+        return $this->_attributes;
     }
 
     /**

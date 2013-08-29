@@ -38,6 +38,8 @@ class Email extends AbstractElement {
     public function render() {
 
         $content = '<input type="email" name="' . $this->getName() . '"';
+        foreach ($this->getAttributes() as $key => $value)
+            $content .= ' ' . $key . '="' . $value . '"';
         if ($this->getUnfilteredValue() != '')
             $content .= ' value="' . htmlspecialchars($this->getUnfilteredValue()) . '"';
         $content .= ' />';

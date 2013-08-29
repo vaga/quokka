@@ -24,7 +24,10 @@ class Textarea extends AbstractElement {
      */
     public function render() {
 
-        $content = '<textarea name="' . $this->getName() . '">';
+        $content = '<textarea name="' . $this->getName() . '"';
+        foreach ($this->getAttributes() as $key => $value)
+            $content .= ' ' . $key . '="' . $value . '"';
+        $content .= '>';
         if ($this->getUnfilteredValue() != '')
             $content .= htmlspecialchars($this->getUnfilteredValue());
         $content .= ' </textarea>';

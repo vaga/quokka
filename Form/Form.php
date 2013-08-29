@@ -112,4 +112,17 @@ class Form {
 
         return $this->_elements[$key];
     }
+
+    /**
+     *
+     * @param $data array
+     * @return void
+     */
+    public function populate($data) {
+        
+        foreach ($data as $element => $value) {
+            
+            $this->getElement($element)->setValue($value);
+        }
+    }
 }

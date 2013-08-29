@@ -53,7 +53,10 @@ class Select extends AbstractElement {
      */
     public function render() {
 
-        $content = '<select name="' . $this->getName() . '">';
+        $content = '<select name="' . $this->getName() . '"';
+        foreach ($this->getAttributes() as $key => $value)
+            $content .= ' ' . $key . '="' . $value . '"';
+        $content .= '>';
         foreach ($this->_options as $key => $value) {
 
             $content .= '<option value="' . htmlspecialchars($key) . '"';
