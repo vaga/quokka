@@ -24,6 +24,11 @@ class PDO extends \PDO {
     private $_mapperNamespace = "";
 
     /**
+     * @var array
+     */
+    private $_mappers = [];
+
+    /**
      *
      * @param $modelNamespace string
      * @return void
@@ -47,11 +52,16 @@ class PDO extends \PDO {
      * @param $mapper string
      * @return \Quokka\Database\AbstractMapper
      */
-    public function getMapper($mapper) {
+    public function getMapper($name) {
 
-        $className = $this->_mapperNamespace . '\\' . ucfirst($mapper) . 'Mapper';
+        if (isset($this->_mappers[$name]))
+            return $this->_mappers[$name];
+
+        $className = $this->_mapperNamespace . '\\' . ucfirst($name) . 'Mapper';
         $mapper = new $className();
         $mapper->setPDO($this);
+
+        $this->_mappers[$name] = $mapper;
         return $mapper;
     }
 }
