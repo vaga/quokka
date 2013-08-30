@@ -30,3 +30,4 @@ class Url extends AbstractValidate {
             return false;
         return true;
     }
+}
