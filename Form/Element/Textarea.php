@@ -30,9 +30,8 @@ class Textarea extends AbstractElement {
         $content .= '>';
         if ($this->getUnfilteredValue() != '')
             $content .= htmlspecialchars($this->getUnfilteredValue());
-        $content .= ' </textarea>';
+        $content .= '</textarea>';
 
         return $content;
     }
 }
-
