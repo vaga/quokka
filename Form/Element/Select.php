@@ -60,7 +60,7 @@ class Select extends AbstractElement {
         foreach ($this->_options as $key => $value) {
 
             $content .= '<option value="' . htmlspecialchars($key) . '"';
-            if ($this->getUnfilteredValue() == $value)
+            if ($this->getUnfilteredValue() == $key)
                 $content .= ' selected="selected"';
             $content .= '>' . htmlspecialchars($value) . '</option>';
         }

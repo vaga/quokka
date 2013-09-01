@@ -89,6 +89,19 @@ class Request {
 
     /**
      *
+     * @param $key string|null
+     * @return mixed
+     */
+    public function getFiles( $key = null ) {
+
+        if( null === $key )
+            return $_FILES;
+
+        return $FILES[$key];
+    }
+
+    /**
+     *
      * @return string
      */
     public function getMethod() {

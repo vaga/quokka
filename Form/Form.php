@@ -45,20 +45,6 @@ class Form {
 
     /**
      *
-     * @param $data array
-     * @return void
-     */
-    public function bind($data) {
-
-        foreach ($data as $key => $value) {
-
-            $value = (isset($value)) ? $value : '';
-            $this->_elements[$key]->setValue($value);
-        }
-    }
-
-    /**
-     *
      * @param $name string
      * @param $msg string
      * @return void
@@ -94,7 +80,7 @@ class Form {
      */
     public function isValid($data) {
 
-        $this->bind($data);
+        $this->populate($data);
         foreach ($this->_elements as $element) {
 
             if (!$element->isValid())
@@ -120,9 +106,9 @@ class Form {
      */
     public function populate($data) {
         
-        foreach ($data as $element => $value) {
+        foreach ($this->_elements as $key => $element) {
             
-            $this->getElement($element)->setValue($value);
+            $element->setValue((isset($data[$key])) ? $data[$key] : '');
         }
     }
 }
