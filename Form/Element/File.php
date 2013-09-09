@@ -39,7 +39,6 @@ class File extends AbstractElement {
     public function upload($path) {
 
         $value = $this->getValue();
-        var_dump($value);
         move_uploaded_file($value['tmp_name'], $path);
     }
 }

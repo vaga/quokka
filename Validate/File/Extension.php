@@ -47,7 +47,7 @@ class Extension extends AbstractValidate {
         if (is_array($data) && isset($data['name']) && isset($data['tmp_name'])) {
 
             $explode = explode('.', $data['name']);
-            $ext = $explode[1];
+            $ext = (isset($explode[1])) ? $explode[1] : '';
         }
         else if ($data instanceof \Quokka\File\File)
             $ext = $data->getExtension();

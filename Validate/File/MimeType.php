@@ -57,7 +57,6 @@ class MimeType extends AbstractValidate {
             $mime = $file->getMimeType();
         }
 
-        echo $mime;
         return in_array($mime, $this->_mimeTypes);
     }
 }
