@@ -20,6 +20,18 @@ class File extends AbstractElement {
 
     /**
      *
+     * @return boolean
+     */
+    public function isValid() {
+
+        if (!$this->isRequired() && $this->getValue()['name'] == '')
+            return true;
+
+        return parent::isValid();
+    }
+
+    /**
+     *
      * @return string
      */
     public function render() {
