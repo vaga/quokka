@@ -20,7 +20,15 @@ use Quokka\Mvc\View\View;
  */
 abstract class AbstractController {
 
+    /**
+     * @var \Quokka\Mvc\Application
+     */
     private $_application = null;
+
+    /**
+     * @var \Quokka\Mvc\View\View
+     */
+     private $_view = null;
 
     /**
      *
@@ -47,19 +55,32 @@ abstract class AbstractController {
         return $this->_application;
     }
 
+    /**
+     *
+     * @return \Quokka\Mvc\View\View
+     */
+    public function getView() {
+
+        if ($this->_view == null) {
+
+            $request = $this->getApplication()->getRequest();
+            $this->_view = new View();
+
+            if($request->getParam('module', null) === null )
+                $file = ucfirst($request->getParam('controller')) . '/'
+                      . strtolower($request->getParam('action')) . '.phtml';
+            else
+                $file = ucfirst($request->getParam('module')) . '/' . ucfirst($request->getParam('controller')) . '/'
+                       . strtolower($request->getParam('action')) . '.phtml';
+
+            $this->_view->setFile($file);
+        }
+        return $this->_view;
+    }
+
     public function render( $data = [] ) {
 
-        $request = $this->getApplication()->getRequest();
-        $view = new View();
-
-        if($request->getParam('module', null) === null )
-            $file = ucfirst($request->getParam('controller')) . '/'
-                  . strtolower($request->getParam('action')) . '.phtml';
-        else
-            $file = ucfirst($request->getParam('module')) . '/' . ucfirst($request->getParam('controller')) . '/'
-                   . strtolower($request->getParam('action')) . '.phtml';
-
-        $view->setFile($file);
+        $view = $this->getView();
 
         foreach( $data as $key => $value )
             $view->set($key, $value);
@@ -67,4 +88,3 @@ abstract class AbstractController {
         return $view->render();
     }
 }
-
