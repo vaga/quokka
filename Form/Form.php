@@ -105,10 +105,10 @@ class Form {
      * @return void
      */
     public function populate($data) {
-        
+
         foreach ($this->_elements as $key => $element) {
-            
-            $element->setValue((isset($data[$key])) ? $data[$key] : '');
+
+            $element->setValue((isset($data[$key])) ? $data[$key] : $element->getValue());
         }
     }
 }
