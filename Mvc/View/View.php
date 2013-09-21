@@ -34,7 +34,7 @@ class View {
      * @return void
      */
     public function __construct($file = '') {
-        
+
         $this->_file = $file;
     }
     /**
