@@ -22,9 +22,18 @@ class File extends AbstractElement {
      *
      * @return boolean
      */
+    public function hasFile() {
+
+        return $this->getValue()['name'] != '';
+    }
+
+    /**
+     *
+     * @return boolean
+     */
     public function isValid() {
 
-        if (!$this->isRequired() && $this->getValue()['name'] == '')
+        if (!$this->isRequired() && !$this->hasFile())
             return true;
 
         return parent::isValid();
