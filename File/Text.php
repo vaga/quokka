@@ -142,10 +142,13 @@ class Text extends File {
      * @param $path string
      * @return void
      */
-    public function save($path) {
+    public function save($path = null) {
 
-        $this->move($path);
-        $this->setFullPath($path);
+        if ($path != null) {
+
+            $this->move($path);
+            $this->setFullPath($path);
+        }
     }
 
     /**

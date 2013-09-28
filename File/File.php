@@ -51,7 +51,7 @@ class File {
     public static function open($path) {
 
         $file = new File();
-        $file->setFullPath($file);    
+        $file->setFullPath($file);
         return $file;
     }
 
@@ -65,8 +65,7 @@ class File {
      *
      * @return void
      */
-    public function save($path = null) {
-    }
+    public function save($path = null) {}
 
     /**
      *
