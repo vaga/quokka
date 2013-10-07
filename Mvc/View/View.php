@@ -50,6 +50,19 @@ class View {
 
     /**
      *
+     * @param $key string
+     * @param $default mixed
+     * @return mixed
+     */
+    public function get($key, $default = null) {
+
+        if (isset($this->_data[$key]))
+            return $this->_data[$key];
+        return $default;
+    }
+
+    /**
+     *
      * @param $file string
      * @return void
      */

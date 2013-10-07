@@ -84,7 +84,7 @@ class Application {
 
         } while( !$this->getRequest()->isDispatched() );
 
-        if( $this->_layout !== null ) {
+        if( $this->_layout !== null && $content !== false ) {
 
             $this->_layout->set('content', $content);
             $content = $this->_layout->render();
