@@ -113,7 +113,7 @@ class Text extends File {
      */
     public function write($content) {
 
-        fwrite($this->getResource(), $content);
+        file_put_contents($this->getFullPath(), $content);
     }
 
     /**
