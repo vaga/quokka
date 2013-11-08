@@ -139,6 +139,19 @@ class Request {
 
     /**
      *
+     * @param $params array
+     * @return void
+     */
+    public function forward($params) {
+
+        $this->setDispatched(false);
+
+        foreach($params as $key => $value)
+            $this->setParam($key, $value);
+    }
+
+    /**
+     *
      * @return string
      */
     public function getUri() {
