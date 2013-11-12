@@ -10,7 +10,7 @@
 namespace Quokka\Filter;
 
 /**
- * \Quokka\Quokka
+ * \Quokka\Filter\Lower
  *
  * @package Quokka
  * @subpackage Filter
