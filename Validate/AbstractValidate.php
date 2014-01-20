@@ -35,11 +35,6 @@ abstract class AbstractValidate {
      */
     public function __construct($args = []) {
 
-        foreach($this->_required as $key) {
-
-            if (!isset($args[$key]))
-                throw new Exception('AbstractValidate: Argument "' . $key . '" doesn\'t exists');
-        }
         $this->_arguments = $args;
     }
 
