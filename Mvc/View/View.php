@@ -73,6 +73,16 @@ class View {
 
     /**
      *
+     * @param $data mixed
+     * @return string
+     */
+    public function escape($data) {
+
+        return htmlspecialchars($data);
+    }
+
+    /**
+     *
      * @return string
      */
     public function render() {
