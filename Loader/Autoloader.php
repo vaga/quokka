@@ -77,17 +77,23 @@ class Autoloader {
 
             return $path . $file;
         }
+        return null;
     }
 
     /**
      *
-     * @return void
+     * @return bool
      */
     private function load( $spec ) {
 
         $path = $this->findPath($spec);
 
+        if (is_null($path))
+            return false;
+
         require_once $path;
+
+        return true;
     }
 
     /**
