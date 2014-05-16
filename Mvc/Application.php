@@ -89,9 +89,11 @@ class Application {
             $this->_layout->set('content', $content);
             $content = $this->_layout->render();
         }
+
+        $this->getResponse()->setBody($content);
+
         $this->_postDispatch();
 
-        $this->getResponse()->appendBody($content);
         $this->getResponse()->send();
     }
 

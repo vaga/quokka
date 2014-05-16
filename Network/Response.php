@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quokka Framework 
+ * Quokka Framework
  *
  * @copyright Copyright 2012 Fabien Casters
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
@@ -83,6 +83,29 @@ class Response {
         $this->_body .= $content;
     }
 
+    /**
+     *
+     * @param $content string
+     * @return void
+     */
+    public function setBody( $content ) {
+
+        $this->_body = $content;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getBody() {
+
+        return $this->_body;
+    }
+
+    /**
+     *
+     * @return void
+     */
     public function sendHeaders() {
 
         http_response_code($this->getStatus());
@@ -92,6 +115,7 @@ class Response {
             header($key . ': ' . $value, true);
         }
     }
+
     /**
      *
      * @return void
