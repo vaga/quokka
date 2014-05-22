@@ -83,6 +83,21 @@ class View {
 
     /**
      *
+     * @param $file string
+     * @return string
+     */
+    public function partial($file, $data = []) {
+
+        $view = new View($file);
+
+        foreach($data as $key => $value)
+            $view->set($key, $value);
+
+        return $view->render();
+    }
+
+    /**
+     *
      * @return string
      */
     public function render() {
