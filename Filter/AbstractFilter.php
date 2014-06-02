@@ -31,4 +31,3 @@ abstract class AbstractFilter {
      */
     abstract public function filter($data = null);
 }
-
