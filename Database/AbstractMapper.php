@@ -85,21 +85,22 @@ abstract class AbstractMapper {
      *
      * @param $sql string
      * @param $data array
-     * @return void
+     * @return boolean
      */
     public function execute($sql, $data) {
 
         $prepare = $this->getPDO()->prepare($sql);
-        $prepare->execute($data);
+        return $prepare->execute($data);
     }
 
     /**
      *
      * @param $obj \Quokka\Database\AbstractEntity
+     * @return boolean
      */
-    public function save($obj) {
+    public function save($entity) {
 
-        $this->saveEntity($obj);
+        return $this->saveEntity($entity);
     }
 
     /**
@@ -112,6 +113,7 @@ abstract class AbstractMapper {
      *
      * @param $data array
      * @param $obj \Quokka\Database\AbstractEntity
+     * @return boolean
      */
-    abstract public function saveEntity($obj);
+    abstract public function saveEntity($entity);
 }

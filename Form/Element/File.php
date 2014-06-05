@@ -24,7 +24,7 @@ class File extends AbstractElement {
      */
     public function hasFile() {
 
-        return $this->getValue()['name'] != '';
+        return is_array($this->getValue()) && $this->getValue()['name'] != '';
     }
 
     /**
