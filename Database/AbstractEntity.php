@@ -16,4 +16,25 @@ namespace Quokka\Database;
  * @subpackage Database
  * @author Fabien Casters
  */
-abstract class AbstractEntity { }
+abstract class AbstractEntity {
+
+    /**
+     *
+     * @param $name string
+     * @param $args array
+     * @return mixed
+     */
+    public function __call($name, $args) {
+
+        if (substr($name, 0, 3) == 'get') {
+
+            $prop = '_' . lcfirst(substr($name, 3));
+            return $this->$prop;
+        }
+        else if (substr($name, 0, 3) == 'set') {
+
+            $prop = '_' . lcfirst(substr($name, 3));
+            $this->$prop = $args[0];
+        }
+    }
+}
