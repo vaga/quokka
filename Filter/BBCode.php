@@ -22,19 +22,21 @@ class BBCode extends AbstractFilter {
 
     public function __construct() {
 
-        $this->addTag('h', new Regex('#\[h([1-6]+)](.+)\[/h\1]#isU', '<h$1>$2</h$1>'));
+        $this->addTag('h', new Regex('#\[h([1-6]+)](.+)\[/h\1]\n#isU', '<h$1>$2</h$1>'));
         $this->addTag('b', new Regex('#\[b](.+)\[/b]#isU', '<strong>$1</strong>'));
         $this->addTag('i', new Regex('#\[i](.+)\[/i]#isU', '<em>$1</em>'));
         $this->addTag('u', new Regex('#\[u](.+)\[/u]#isU', '<ins>$1</ins>'));
         $this->addTag('s', new Regex('#\[s](.+)\[/s]#isU', '<del>$1</del>'));
-        $this->addTag('img', new Regex('#\[img](.+)\[/img]#isU', '<img src="$1" />'));
+        $this->addTag('img', new Regex('#\[img(?||=[\'"]?+([^\'"]+)[\'"]?+)](.+)\[/img]#isU', function ($data) {
+            if ($data[1] == '')
+                return '<img src="' . $data[2] . '" alt="Image" />';
+            return '<img src="' . $data[1] . '" alt="' . $data[2] . '" />';
+        }));
         $this->addTag('url', new Regex('#\[url(?|=[\'"]?+([^]"\']++)[\'"]?+]([^[]++)|](([^[]++)))\[/url]#', '<a href="$1">$2</a>'));
         $this->addTag('list', new Regex('#\[list](.+)\[/list]#isU', function ($data) {
 
-            $list = '<ul>';
-            $regex = new Regex('#\[\*](.+)(\n|\r\n?)#isU', '<li>$1</li>');
-            $list .= $regex->filter($data[1]);
-            return $list . '</ul>';
+            $regex = new Regex('#\[\*](.+)\n#isU', '<li>$1</li>');
+            return '<ul>' . $regex->filter($data[1]) . '</ul>';
         }));
         $this->addTag('abbr', new Regex('#\[abbr=(.*)](.*)\[/abbr]#', '<abbr title="$1">$2</abbr>'));
     }
@@ -66,8 +68,14 @@ class BBCode extends AbstractFilter {
      */
     public function filter($data = null) {
 
+        $data = preg_replace("/ +/", " ", $data);
+        $data = str_replace(["\t", "\r"], "", $data);
+        $data = str_replace(" \n", "\n", $data);
+
         foreach ($this->getTags() as $tag)
             $data = $tag->filter($data);
+
+        $data = str_replace("\n", '<br />', $data);
 
         return $data;
     }
