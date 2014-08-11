@@ -166,15 +166,15 @@ class Pagination extends AbstractWidget {
 
         $pages = $this->getTotalPages();
 
-        $html = '<div class="pagination">';
+        $html = '<ul class="pagination">';
         for ($i = 1; $i <= $pages; ++$i) {
 
             if ($this->getCurrentPage() != $i)
-                $html .= '<a href="' . $this->getUrl($i) . '">' . $i . '</a>';
+                $html .= '<li><a href="' . $this->getUrl($i) . '">' . $i . '</a></li>';
             else
-                $html .= '<span class="active">' . $i . '</span>';
+                $html .= '<li class="active"><a href="#">' . $i . '</a></li>';
         }
-        $html .= '</div>';
+        $html .= '</ul>';
         return $html;
     }
 }
