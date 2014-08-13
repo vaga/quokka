@@ -34,6 +34,11 @@ class Pagination extends AbstractWidget {
     private $_totalRows = 0;
 
     /**
+     * @var integer
+     */
+    private $_maxPage = 11;
+
+    /**
      * @string
      */
     private $_url = '%d';
@@ -93,6 +98,25 @@ class Pagination extends AbstractWidget {
     public function getTotalRows() {
 
         return $this->_totalRows;
+    }
+
+    /**
+     *
+     * @param integer $maxPage
+     * @return void
+     */
+    public function setMaxPage($maxPage) {
+
+        $this->_maxPage = $maxPage;
+    }
+
+    /**
+     *
+     * @return integer
+     */
+    public function getMaxPage() {
+
+        return $this->_maxPage;
     }
 
     /**
@@ -165,15 +189,19 @@ class Pagination extends AbstractWidget {
     public function render() {
 
         $pages = $this->getTotalPages();
+        $nbPage = $this->getMaxPage();
+        $index = ($this->getCurrentPage() - round($nbPage / 2) > 1) ? $this->getCurrentPage() - round($nbPage / 2) + 1 : 1;
 
         $html = '<ul class="pagination">';
-        for ($i = 1; $i <= $pages; ++$i) {
+        $html .= '<li class="previous"><a href="' . $this->getPreviousUrl() . '">&larr;</a></li>';
+        for ($i = $index; $i < $nbPage + $index; ++$i) {
 
             if ($this->getCurrentPage() != $i)
                 $html .= '<li><a href="' . $this->getUrl($i) . '">' . $i . '</a></li>';
             else
                 $html .= '<li class="active"><a href="#">' . $i . '</a></li>';
         }
+        $html .= '<li class="next"><a href="' . $this->getNextUrl() . '">&rarr;</a></li>';
         $html .= '</ul>';
         return $html;
     }
