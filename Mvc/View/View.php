@@ -63,6 +63,15 @@ class View {
 
     /**
      *
+     * @return array
+     */
+    public function getData() {
+
+        return $this->_data;
+    }
+
+    /**
+     *
      * @param $file string
      * @return void
      */

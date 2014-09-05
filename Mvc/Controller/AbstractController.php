@@ -81,6 +81,11 @@ abstract class AbstractController {
     public function render( $data = [] ) {
 
         $view = $this->getView();
+        $layout = $this->getApplication()->getLayout();
+
+        if($layout != null)
+            foreach($layout->getData() as $key => $value)
+                $view->set($key, $value);
 
         foreach( $data as $key => $value )
             $view->set($key, $value);
