@@ -120,6 +120,16 @@ class Request {
 
     /**
      *
+     * @return boolean
+     */
+    public function isXmlHttpRequest() {
+
+        $xmlHttpRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? $_SERVER['HTTP_X_REQUESTED_WITH'] : null;
+        return ($xmlHttpRequest === 'XMLHttpRequest');
+    }
+
+    /**
+     *
      * @param $dispatched boolean
      * @return void
      */
