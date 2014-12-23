@@ -22,7 +22,7 @@ class BBCode extends AbstractFilter {
 
     public function __construct() {
 
-        $this->addTag('h', new Regex('#\[h([1-6]+)](.+)\[/h\1]\n#isU', '<h$1>$2</h$1>'));
+        $this->addTag('h', new Regex('#\[h([1-6]+)](.+)\[/h\1]\n#isU', '</p><h$1>$2</h$1><p>'));
         $this->addTag('b', new Regex('#\[b](.+)\[/b]#isU', '<strong>$1</strong>'));
         $this->addTag('i', new Regex('#\[i](.+)\[/i]#isU', '<em>$1</em>'));
         $this->addTag('u', new Regex('#\[u](.+)\[/u]#isU', '<ins>$1</ins>'));
@@ -33,10 +33,10 @@ class BBCode extends AbstractFilter {
             return '<img src="' . $data[1] . '" alt="' . $data[2] . '" />';
         }));
         $this->addTag('url', new Regex('#\[url(?|=[\'"]?+([^]"\']++)[\'"]?+]([^[]++)|](([^[]++)))\[/url]#', '<a href="$1">$2</a>'));
-        $this->addTag('list', new Regex('#\[list](.+)\[/list]#isU', function ($data) {
+        $this->addTag('list', new Regex('#\[list]\n(.+)\[/list]\n#isU', function ($data) {
 
             $regex = new Regex('#\[\*](.+)\n#isU', '<li>$1</li>');
-            return '<ul>' . $regex->filter($data[1]) . '</ul>';
+            return '</p><ul>' . $regex->filter($data[1]) . '</ul><p>';
         }));
         $this->addTag('abbr', new Regex('#\[abbr=(.*)](.*)\[/abbr]#', '<abbr title="$1">$2</abbr>'));
     }
@@ -75,7 +75,7 @@ class BBCode extends AbstractFilter {
         foreach ($this->getTags() as $tag)
             $data = $tag->filter($data);
 
-        $data = str_replace("\n", '<br />', $data);
+        $data = "<p>" . str_replace("\n", '<br />', $data) . "</p>";
 
         return $data;
     }
