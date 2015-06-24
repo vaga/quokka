@@ -119,6 +119,15 @@ class Image extends File {
             $width = $height * $this->getWidth() / $this->getHeight();
 
         $newResource = imagecreatetruecolor($width , $height);
+
+        if($this->getExtension() == 'png') {
+
+            imagealphablending($newResource, false);
+            imagesavealpha($newResource, true);
+            $transparent = imagecolorallocatealpha($newResource, 255, 255, 255, 127);
+            imagefilledrectangle($newResource, 0, 0, $width, $height, $transparent);
+        }
+
         imagecopyresampled($newResource, $this->getResource(), 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
         $this->setWidth($width);
         $this->setHeight($height);
@@ -207,8 +216,12 @@ class Image extends File {
 
             if($type == 'jpeg' || $type == 'jpg')
                 imagejpeg($this->getResource(), $this->getFullPath(), $qualite);
-            else if($type == 'png')
+            else if($type == 'png') {
+
+                imagealphablending($this->getResource(), false);
+                imagesavealpha($this->getResource(), true);
                 imagepng($this->getResource(), $this->getFullPath());
+            }
             else if($type == 'gif')
                 imagegif($this->getResource(), $this->getFullPath(), $qualite);
         }
