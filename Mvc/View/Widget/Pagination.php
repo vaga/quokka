@@ -149,8 +149,9 @@ class Pagination extends AbstractWidget {
             $pages = 1;
         else
             $pages = floor($this->getTotalRows() / $this->getRowsPerPage());
-        if (($this->getTotalRows() % $this->getRowsPerPage()) > 0)
+        if (($this->getTotalRows() % $this->getRowsPerPage()) > 0) {
             $pages += 1;
+        }
         return $pages;
     }
 
@@ -188,18 +189,22 @@ class Pagination extends AbstractWidget {
      */
     public function render() {
 
-        $nbPage = $this->getMaxPage();
-        $pages = ($this->getTotalPages() > $nbPage) ? $nbPage : $this->getTotalPages();
-        $index = ($this->getCurrentPage() - round($nbPage / 2) > 1) ? $this->getCurrentPage() - round($nbPage / 2) + 1 : 1;
+        $pages = ($this->getTotalPages() > $this->getMaxPage()) ? $this->getMaxPage() : $this->getTotalPages();
+        
+        $index = 1;
+        if ($this->getCurrentPage() - floor($this->getMaxPage() / 2) > 1)
+            $index = $this->getCurrentPage() - floor($this->getMaxPage() / 2);
+        if ($this->getTotalPages() - $this->getCurrentPage() < floor($this->getMaxPage() / 2))
+            $index = ($this->getTotalPages() - $this->getMaxPage() + 1);
 
         $html = '<ul class="pagination">';
         $html .= '<li class="previous"><a href="' . $this->getPreviousUrl() . '">&larr;</a></li>';
         for ($i = $index; $i < $pages + $index; ++$i) {
 
-            if ($this->getCurrentPage() != $i)
-                $html .= '<li><a href="' . $this->getUrl($i) . '">' . $i . '</a></li>';
-            else
+            if ($this->getCurrentPage() == $i)
                 $html .= '<li class="active"><a href="#">' . $i . '</a></li>';
+            else
+                $html .= '<li><a href="' . $this->getUrl($i) . '">' . $i . '</a></li>';
         }
         $html .= '<li class="next"><a href="' . $this->getNextUrl() . '">&rarr;</a></li>';
         $html .= '</ul>';
