@@ -189,17 +189,24 @@ class Pagination extends AbstractWidget {
      */
     public function render() {
 
-        $pages = ($this->getTotalPages() > $this->getMaxPage()) ? $this->getMaxPage() : $this->getTotalPages();
-        
-        $index = 1;
-        if ($this->getCurrentPage() - floor($this->getMaxPage() / 2) > 1)
-            $index = $this->getCurrentPage() - floor($this->getMaxPage() / 2);
-        if ($this->getTotalPages() - $this->getCurrentPage() < floor($this->getMaxPage() / 2))
-            $index = ($this->getTotalPages() - $this->getMaxPage() + 1);
+
+        $startPage = 1;
+        if ($this->getTotalPages() >= $this->getMaxPage()) {
+            $halfButtonCount = floor($this->getMaxPage() / 2);
+
+            if ($this->getCurrentPage() - $halfButtonCount <= 0) {
+                $startPage = 1;
+            } elseif ($this->getCurrentPage() + $halfButtonCount <= $this->getTotalPages()) {
+                $startPage = $this->getCurrentPage() - $halfButtonCount;
+            } else {
+                $startPage = $this->getTotalPages() - $this->getMaxPage() + 1;
+            }
+        }
 
         $html = '<ul class="pagination">';
         $html .= '<li class="previous"><a href="' . $this->getPreviousUrl() . '">&larr;</a></li>';
-        for ($i = $index; $i < $pages + $index; ++$i) {
+        $buttonCount = ($this->getTotalPages() > $this->getMaxPage()) ? $this->getMaxPage() : $this->getTotalPages();
+        for ($i = $startPage; $i < $startPage + $buttonCount; ++$i) {
 
             if ($this->getCurrentPage() == $i)
                 $html .= '<li class="active"><a href="#">' . $i . '</a></li>';
