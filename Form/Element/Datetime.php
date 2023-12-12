@@ -41,6 +41,8 @@ class Datetime extends AbstractElement {
 
         if (!parent::isValid())
             return false;
+        if (!$this->isRequired() && strlen($this->getUnfilteredValue()) === 0)
+            return true;
         foreach($this->_formats as $format) {
 
             if (\DateTime::createFromFormat($format, $this->getUnfilteredValue()) !== false)
