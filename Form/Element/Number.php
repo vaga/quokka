@@ -31,6 +31,18 @@ class Number extends AbstractElement {
 
     /**
      *
+     * @return boolean
+     */
+    public function isValid () {
+
+        if (!$this->isRequired() && strlen($this->getUnfilteredValue()) === 0)
+            return true;
+
+        return parent::isValid();
+    }
+
+    /**
+     *
      * @return string
      */
     public function render() {
