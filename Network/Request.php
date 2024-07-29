@@ -168,4 +168,13 @@ class Request {
 
         return $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
+
+    /**
+     *
+     * @return string
+     */
+    public function getPath() {
+
+        return $_SERVER['REQUEST_URI'];
+    }
 }

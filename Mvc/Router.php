@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Quokka Framework 
+ * Quokka Framework
  *
  * @copyright Copyright 2012 Fabien Casters
  * @license http://www.gnu.org/licenses/lgpl.html Lesser General Public License
@@ -24,8 +24,8 @@ class Router {
     private $_rules = [];
 
     /**
-     * 
-     * @param $name string 
+     *
+     * @param $name string
      * @return void
      */
     public function addRule( $name, $regexp, $module, $controller, $action, $params = [] ) {
@@ -36,7 +36,7 @@ class Router {
                 'module'     => $module,
                 'controller' => $controller,
                 'action'     => $action
-            ] 
+            ]
         ];
         $this->_rules[$name] = $rule;
 
@@ -50,7 +50,7 @@ class Router {
      */
     public function route( $request ) {
 
-        $uri = preg_replace('/\?.*/', '', $request->getUri());
+        $uri = preg_replace('/\?.*/', '', $request->getPath());
 
         foreach( $this->_rules as $rule ) {
 
