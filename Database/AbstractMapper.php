@@ -65,9 +65,10 @@ abstract class AbstractMapper {
 
     /**
      *
+     * @template T
      * @param $sql string
      * @param $params array
-     * @return \Quokka\Database\AbstractEntity
+     * @return T|false
      */
     public function fetchOne($sql, $params = []) {
 
@@ -95,7 +96,8 @@ abstract class AbstractMapper {
 
     /**
      *
-     * @param $obj \Quokka\Database\AbstractEntity
+     * @template T
+     * @param T $entity
      * @return boolean
      */
     public function save($entity) {
@@ -105,14 +107,16 @@ abstract class AbstractMapper {
 
     /**
      *
+     * @template T
      * @param $data array
+     * @return T
      */
     abstract public function createEntity($data);
 
     /**
      *
-     * @param $data array
-     * @param $obj \Quokka\Database\AbstractEntity
+     * @template T
+     * @param T $entity
      * @return boolean
      */
     abstract public function saveEntity($entity);

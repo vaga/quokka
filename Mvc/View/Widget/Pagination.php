@@ -121,7 +121,7 @@ class Pagination extends AbstractWidget {
 
     /**
      *
-     * @param integer $url
+     * @param string $url
      * @return void
      */
     public function setUrl($url) {
