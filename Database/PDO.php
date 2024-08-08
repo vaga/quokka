@@ -48,9 +48,9 @@ class PDO extends \PDO {
     }
 
     /**
-     *
+     * @template T
      * @param $mapper string
-     * @return \Quokka\Database\AbstractMapper
+     * @return T
      */
     public function getMapper($name) {
 
