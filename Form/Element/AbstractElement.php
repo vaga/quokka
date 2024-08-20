@@ -201,7 +201,7 @@ abstract class AbstractElement {
 
     /**
      *
-     * @return void
+     * @return string
      */
     abstract public function render();
 }
